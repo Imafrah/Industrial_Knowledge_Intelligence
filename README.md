@@ -271,19 +271,19 @@ npm run dev
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Plant Engineer / Operator
-    participant FE as React + Vite Frontend
-    participant BE as FastAPI Backend
-    participant OCR as OCR / Text Extractor
-    participant GEM as Google Gemini API
-    participant DB as Postgres (pgvector)
-    participant KG as NetworkX Graph
+    actor User as "Plant Engineer / Operator"
+    participant FE as "React + Vite Frontend"
+    participant BE as "FastAPI Backend"
+    participant OCR as "OCR / Text Extractor"
+    participant GEM as "Google Gemini API"
+    participant DB as "Postgres (pgvector)"
+    participant KG as "NetworkX Graph"
 
     User->>FE: Upload Document / Manual
     FE->>BE: POST /api/documents/upload
     BE->>OCR: Extract Text (Tesseract fallback if image/scanned PDF)
     OCR-->>BE: Extracted Document Content
-    BE->>GEM: Generate 768-dim Embeddings (gemini-embedding-001)
+    BE->>GEM: Generate 768-dim Embeddings
     GEM-->>BE: Embeddings Vectors
     BE->>KG: Extract Entities & Relation Triples
     BE->>DB: Store Document, Chunks & Vectors
@@ -291,7 +291,7 @@ sequenceDiagram
 
     User->>FE: Submit Query in Chat or Search
     FE->>BE: POST /api/chat or POST /api/search/hybrid
-    BE->>DB: Execute Lexical FTS + Vector Cosine Distance (RRF)
+    BE->>DB: Execute Lexical FTS + Vector Cosine Distance
     DB-->>BE: Top-K Context Chunks
     BE->>GEM: Generate Response with Citations
     GEM-->>BE: Final AI Response
